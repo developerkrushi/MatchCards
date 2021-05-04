@@ -18,6 +18,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var timer:Timer?
     var milliseconds:Int = 45 * 1000
     var firstFlippedCardindex:IndexPath?
+    var displayAlert = false
     
 
     override func viewDidLoad() {
@@ -125,7 +126,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if cardOne.imageName == cardTwo.imageName {
             
-            // Set the m atch status and remove them
+            // Set the match status and remove them
             cardOne.isCardMatched = true
             cardTwo.isCardMatched = true
             
@@ -151,6 +152,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         var hasWon = true
         
+        if displayAlert == true {
+            return
+        }
+        
         for card in cardsArray {
             
             if card.isCardMatched == false {
@@ -164,6 +169,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //User has Won. Show Alert
             
             showAlert(title: "Congratulations", message: "You've won the game!")
+            displayAlert = true
         }
         else {
             
@@ -182,20 +188,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         alert.addAction(okAction)
         
-        present(alert, animated: true, completion: resetGame)
-    }
-
-
-// MARK: - Reset Game
-    
-    func resetGame() {
-        
-        for card in cardsArray {
-            card.isCardMatched = false
-            card.isCardFlipped = false
-        }
-        
-        viewDidLoad()
+        present(alert, animated: true, completion: nil)
     }
 
 }
